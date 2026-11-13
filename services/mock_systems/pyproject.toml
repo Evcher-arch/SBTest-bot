@@ -1,0 +1,18 @@
+[project]
+name = "mock-systems"
+version = "0.1.0"
+description = "Заглушка пяти систем: CRM, биллинг, Service-Desk, календарь, портал документации"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "common",
+    "fastapi>=0.162,<1",
+    "uvicorn>=0.54,<1",
+    "httpx>=0.28,<0.29",
+    "PyYAML>=6.0,<7",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+common = { workspace = true }

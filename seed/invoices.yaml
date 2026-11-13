@@ -1,0 +1,229 @@
+# Вымышленные счета. Даты — смещения от текущего дня: -5d (5 дней назад), +3d (через 3 дня).
+# Статусы: issued, partially_paid, paid, cancelled. Просрочка вычисляется заглушкой.
+
+# --- ООО «Ромашка» (Иванов): просроченный, со сроком через 2 дня, оплаченный, частично оплаченный
+- number: СЧ-2026-0142
+  client_id: C001
+  date: -35d
+  due: -5d
+  amount: 184500.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0143
+  client_id: C001
+  date: -12d
+  due: +2d
+  amount: 96000.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0131
+  client_id: C001
+  date: -60d
+  due: -30d
+  amount: 72000.00
+  status: paid
+  payments:
+    - {date: -32d, amount: 72000.00}
+
+- number: СЧ-2026-0137
+  client_id: C001
+  date: -45d
+  due: -15d
+  amount: 150000.00
+  status: partially_paid
+  payments:
+    - {date: -20d, amount: 100000.00}
+
+# --- АО «Северный ветер» (Иванов)
+- number: СЧ-2026-0151
+  client_id: C002
+  date: -20d
+  due: +10d
+  amount: 230000.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0152
+  client_id: C002
+  date: -50d
+  due: -20d
+  amount: 64000.00
+  status: paid
+  payments:
+    - {date: -21d, amount: 64000.00}
+
+# --- ООО «Северный ветер Логистик» (Иванов)
+- number: СЧ-2026-0155
+  client_id: C003
+  date: -10d
+  due: +20d
+  amount: 47800.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0156
+  client_id: C003
+  date: -40d
+  due: -10d
+  amount: 12500.00
+  status: cancelled
+  payments: []
+
+# --- ООО «Вектор» (Иванов): срок через 15 дней — его сдвигают в прошлое на показе
+- number: СЧ-2026-0160
+  client_id: C004
+  date: -15d
+  due: +15d
+  amount: 318000.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0161
+  client_id: C004
+  date: -70d
+  due: -40d
+  amount: 89000.00
+  status: paid
+  payments:
+    - {date: -41d, amount: 89000.00}
+
+- number: СЧ-2026-0162
+  client_id: C004
+  date: -5d
+  due: +25d
+  amount: 54000.00
+  status: issued
+  payments: []
+
+# --- ООО «Березка-Сервис» (Иванов)
+- number: СЧ-2026-0165
+  client_id: C005
+  date: -25d
+  due: +5d
+  amount: 41200.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0166
+  client_id: C005
+  date: -55d
+  due: -25d
+  amount: 27300.00
+  status: paid
+  payments:
+    - {date: -26d, amount: 27300.00}
+
+# --- ООО «Альфа-Строй» (Петрова): счета для теста «чужой доступ»
+- number: СЧ-2026-0201
+  client_id: C006
+  date: -18d
+  due: +12d
+  amount: 520000.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0202
+  client_id: C006
+  date: -40d
+  due: -8d
+  amount: 133000.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0203
+  client_id: C006
+  date: -65d
+  due: -35d
+  amount: 76000.00
+  status: paid
+  payments:
+    - {date: -36d, amount: 76000.00}
+
+# --- АО «Гранит» (Петрова)
+- number: СЧ-2026-0210
+  client_id: C007
+  date: -14d
+  due: +1d
+  amount: 205000.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0211
+  client_id: C007
+  date: -48d
+  due: -18d
+  amount: 99000.00
+  status: partially_paid
+  payments:
+    - {date: -19d, amount: 50000.00}
+
+# --- ООО «Лотос» (Петрова)
+- number: СЧ-2026-0215
+  client_id: C008
+  date: -9d
+  due: +21d
+  amount: 38900.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0216
+  client_id: C008
+  date: -80d
+  due: -50d
+  amount: 61000.00
+  status: paid
+  payments:
+    - {date: -50d, amount: 61000.00}
+
+# --- ИП Смирнова (Петрова)
+- number: СЧ-2026-0220
+  client_id: C009
+  date: -30d
+  due: 0d
+  amount: 15600.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0221
+  client_id: C009
+  date: -90d
+  due: -60d
+  amount: 22000.00
+  status: cancelled
+  payments: []
+
+# --- ООО «Полюс» (Петрова)
+- number: СЧ-2026-0225
+  client_id: C010
+  date: -22d
+  due: +8d
+  amount: 274000.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0226
+  client_id: C010
+  date: -33d
+  due: -3d
+  amount: 118000.00
+  status: issued
+  payments: []
+
+- number: СЧ-2026-0227
+  client_id: C010
+  date: -75d
+  due: -45d
+  amount: 143500.00
+  status: paid
+  payments:
+    - {date: -46d, amount: 143500.00}
+
+- number: СЧ-2026-0228
+  client_id: C010
+  date: -3d
+  due: +27d
+  amount: 67000.00
+  status: issued
+  payments: []

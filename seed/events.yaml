@@ -1,0 +1,57 @@
+# Встречи. Время — смещение дня и время по часовому поясу стенда.
+# attendees: сотрудники {employee_id} и внешние участники {name, client_id}.
+- id: EV-001
+  subject: Разбор воронки продаж за месяц
+  start: +1d 10:00
+  end: +1d 11:00
+  organizer_id: ivanov
+  attendees:
+    - {employee_id: kuznetsova}
+
+- id: EV-002
+  subject: Переговоры по новому договору поставки
+  start: +1d 14:00
+  end: +1d 15:30
+  organizer_id: petrova
+  attendees:
+    - {name: Орлов Дмитрий (ООО «Альфа-Строй»), client_id: C006}
+
+- id: EV-003
+  subject: Обмен клиентами между менеджерами
+  start: +0d 16:00
+  end: +0d 16:30
+  organizer_id: ivanov
+  attendees:
+    - {employee_id: petrova}
+
+- id: EV-004
+  subject: Планёрка Service-Desk
+  start: +1d 09:30
+  end: +1d 10:00
+  organizer_id: sidorov
+  attendees: []
+
+- id: EV-005
+  subject: Презентация для ООО «Вектор»
+  start: +3d 11:00
+  end: +3d 12:30
+  organizer_id: ivanov
+  attendees:
+    - {name: Белова Мария (ООО «Вектор»), client_id: C004}
+
+- id: EV-006
+  subject: Еженедельное совещание отдела продаж
+  start: +4d 10:00
+  end: +4d 11:00
+  organizer_id: kuznetsova
+  attendees:
+    - {employee_id: ivanov}
+    - {employee_id: petrova}
+
+- id: EV-007
+  subject: Сверка задолженности с АО «Гранит»
+  start: -1d 12:00
+  end: -1d 13:00
+  organizer_id: petrova
+  attendees:
+    - {name: Ковалёв Игорь (АО «Гранит»), client_id: C007}

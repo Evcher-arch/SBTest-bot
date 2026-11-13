@@ -1,0 +1,24 @@
+# Вымышленные демо-сотрудники. Группы: all, sales, it, managers.
+- id: ivanov
+  name: Иванов Иван Иванович
+  position: Менеджер по продажам
+  groups: [all, sales]
+  manager_id: kuznetsova
+
+- id: petrova
+  name: Петрова Анна Сергеевна
+  position: Менеджер по продажам
+  groups: [all, sales]
+  manager_id: kuznetsova
+
+- id: sidorov
+  name: Сидоров Пётр Алексеевич
+  position: Инженер Service-Desk
+  groups: [all, it]
+  manager_id: null
+
+- id: kuznetsova
+  name: Кузнецова Елена Викторовна
+  position: Руководитель отдела продаж
+  groups: [all, sales, managers]
+  manager_id: null

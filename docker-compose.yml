@@ -1,0 +1,120 @@
+# Демо-стенд ИИ-помощника. Запуск: docker compose up -d --build
+# Тесты: docker compose run --rm tests pytest -m "not integration"
+
+name: demo-stand
+
+x-app: &app
+  build: .
+  image: demo-stand-app:latest
+  env_file: .env
+  restart: unless-stopped
+  # Langfuse поднимается отдельным compose-проектом и доступен через порт хоста
+  extra_hosts:
+    - host.docker.internal:host-gateway
+  depends_on: &app-deps
+    postgres: { condition: service_healthy }
+    redis: { condition: service_healthy }
+
+x-health: &health
+  interval: 10s
+  timeout: 5s
+  retries: 12
+  start_period: 20s
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: stand
+      POSTGRES_PASSWORD: stand
+      POSTGRES_DB: stand
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stand -d stand"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  mock-systems:
+    <<: *app
+    depends_on: {}
+    command: uvicorn services.mock_systems.main:app --host 0.0.0.0 --port 8040
+    ports:
+      - 8040:8040
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8040/health"]
+
+  mcp-systems:
+    <<: *app
+    depends_on:
+      mock-systems: { condition: service_healthy }
+    command: python -m services.mcp_systems.main
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8020/health"]
+
+  search:
+    <<: *app
+    depends_on:
+      <<: *app-deps
+      mock-systems: { condition: service_healthy }
+    command: uvicorn services.search.main:app --host 0.0.0.0 --port 8010
+    ports:
+      - 8010:8010
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8010/health"]
+
+  orchestrator:
+    <<: *app
+    depends_on:
+      <<: *app-deps
+      search: { condition: service_healthy }
+      mcp-systems: { condition: service_healthy }
+    command: uvicorn services.orchestrator.main:app --host 0.0.0.0 --port 8000
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+
+  recommender:
+    <<: *app
+    depends_on:
+      <<: *app-deps
+      mcp-systems: { condition: service_healthy }
+    command: uvicorn services.recommender.main:app --host 0.0.0.0 --port 8030
+    ports:
+      - 8030:8030
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8030/health"]
+
+  tg-bot:
+    <<: *app
+    depends_on:
+      <<: *app-deps
+      orchestrator: { condition: service_healthy }
+    command: python -m services.tg_bot.main
+    healthcheck:
+      <<: *health
+      test: ["CMD", "curl", "-fsS", "http://localhost:8443/health"]
+
+  tests:
+    <<: *app
+    profiles: ["tests"]
+    restart: "no"
+    command: pytest -m "not integration"
+
+volumes:
+  pgdata:

@@ -1,0 +1,62 @@
+# Правила рекомендаций (принцип IV): условие, получатель и расписание задаёт конфигурация,
+# модель только формулирует текст готового сигнала (POST /formulate у оркестратора).
+#
+# source.selection — сервисная выборка точки MCP /service; source.params — её параметры.
+# condition — пороги, проверяемые кодом; recipient — откуда берётся получатель.
+# schedule.interval_seconds — не больше 120, чтобы уложиться в SC-007 (3 минуты).
+# template — запасной текст на случай сбоя модели; подстановки {поле} из фактов сигнала.
+
+- id: invoice_overdue
+  title: Просроченный счёт
+  source:
+    selection: billing_select_invoices
+    params: {status: overdue}
+  condition:
+    min_overdue_days: 1
+  recipient: client_manager
+  schedule:
+    interval_seconds: 60
+  template: >-
+    Счёт {number} клиента {client_name} на {amount_text} просрочен на {overdue_days} дн.
+    (срок оплаты был {due_date}). Свяжитесь с клиентом.
+
+- id: invoice_due_soon
+  title: Подходящий срок оплаты
+  source:
+    selection: billing_select_invoices
+    params: {status: due_soon}
+  condition:
+    days_before_due: 3
+  recipient: client_manager
+  schedule:
+    interval_seconds: 60
+  template: >-
+    Срок оплаты счёта {number} клиента {client_name} на {amount_text} — {due_date}.
+    Напомните клиенту о платеже.
+
+- id: meeting_tomorrow
+  title: Завтрашняя встреча с руководителем или клиентом
+  source:
+    selection: calendar_select_events
+    params: {day_offset: 1}
+  condition:
+    with: [manager, client]
+  recipient: event_user
+  schedule:
+    interval_seconds: 60
+  template: >-
+    Завтра в {time} — встреча «{subject}» ({with_whom}). Подготовьтесь заранее.
+
+- id: ticket_stale
+  title: Обращение без движения или с истекающим сроком
+  source:
+    selection: sd_select_stale_tickets
+    params: {idle_days: 3, due_within: 24}
+  condition:
+    idle_days: 3
+    due_within_hours: 24
+  recipient: ticket_assignee
+  schedule:
+    interval_seconds: 60
+  template: >-
+    Обращение {number} «{title}»: {reason_text}, срок {due_text}.

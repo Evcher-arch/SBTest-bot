@@ -1,0 +1,22 @@
+[project]
+name = "recommender"
+version = "0.1.0"
+description = "Сервис рекомендаций: правила, планировщик, сигналы, подписки"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "common",
+    "fastapi>=0.162,<1",
+    "uvicorn>=0.54,<1",
+    "APScheduler>=3.11,<4",
+    "SQLAlchemy[asyncio]>=2.1,<3",
+    "asyncpg>=0.32,<0.33",
+    "fastmcp>=3.0,<4",
+    "httpx>=0.28,<0.29",
+    "PyYAML>=6.0,<7",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+common = { workspace = true }

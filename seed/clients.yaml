@@ -1,0 +1,51 @@
+# Вымышленные клиенты. ИНН — 10 или 12 цифр, уникален.
+# У Иванова два клиента с похожим названием «Северный ветер» (для уточняющего вопроса).
+- client_id: C001
+  name: ООО «Ромашка»
+  inn: "7701234567"
+  manager_id: ivanov
+
+- client_id: C002
+  name: АО «Северный ветер»
+  inn: "7702345678"
+  manager_id: ivanov
+
+- client_id: C003
+  name: ООО «Северный ветер Логистик»
+  inn: "7703456789"
+  manager_id: ivanov
+
+- client_id: C004
+  name: ООО «Вектор»
+  inn: "7704567890"
+  manager_id: ivanov
+
+- client_id: C005
+  name: ООО «Березка-Сервис»
+  inn: "7705678901"
+  manager_id: ivanov
+
+- client_id: C006
+  name: ООО «Альфа-Строй»
+  inn: "7806789012"
+  manager_id: petrova
+
+- client_id: C007
+  name: АО «Гранит»
+  inn: "7807890123"
+  manager_id: petrova
+
+- client_id: C008
+  name: ООО «Лотос»
+  inn: "7808901234"
+  manager_id: petrova
+
+- client_id: C009
+  name: ИП Смирнова Ольга Николаевна
+  inn: "780912345678"
+  manager_id: petrova
+
+- client_id: C010
+  name: ООО «Полюс»
+  inn: "7810123456"
+  manager_id: petrova

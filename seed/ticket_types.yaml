@@ -1,0 +1,32 @@
+# Типы обращений Service-Desk. Тип поля: string, enum, date.
+- type_id: vpn_access
+  name: Доступ и VPN
+  sla_hours: 8
+  fields:
+    - {name: urgency, label: Срочность, required: true, type: enum, options: [Низкая, Средняя, Высокая]}
+    - {name: resource, label: Ресурс, required: false, type: string}
+
+- type_id: hardware
+  name: Оборудование
+  sla_hours: 24
+  fields:
+    - {name: device, label: Устройство, required: true, type: string}
+    - {name: inventory_number, label: Инвентарный номер, required: false, type: string}
+
+- type_id: software
+  name: Программное обеспечение
+  sla_hours: 16
+  fields:
+    - {name: software, label: Программа, required: true, type: string}
+
+- type_id: account
+  name: Учётная запись и пароль
+  sla_hours: 4
+  fields:
+    - {name: system, label: Система, required: true, type: string}
+
+- type_id: other
+  name: Прочее
+  sla_hours: 40
+  fields:
+    - {name: desired_date, label: Желаемая дата, required: false, type: date}
